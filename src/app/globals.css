@@ -2,8 +2,9 @@
 
 :root {
   --background: #FFF;
-  --foreground: #E5E7EB;
-  --text: #121826;
+  --foreground: #121826;
+  --block: #E5E7EB;
+  --block-hover: #E5E7EBCC;
   font-family: var(--font-be-vietnam-pro), sans-serif;
 }
 
@@ -14,13 +15,13 @@
   --font-mono: var(--font-be-vietnam-pro);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #121826;
-    --foreground: #6C727F;
-    --text: #FFF;
+    --foreground: #FFF;
+    --block: #FFF;
   }
-}
+} */
 
 body {
   background: var(--background);
@@ -38,6 +39,9 @@ h2, h3 {
 
 p {
   font-size: 14px;
+}
+h1,h2, h3, p,li,a {
+  font-family: var(--font-be-vietnam-pro), sans-serif;
 }
 
 @media screen and (max-width: 768px) {

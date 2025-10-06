@@ -1,0 +1,20 @@
+{
+  "theme": {
+    "extend": {
+      "backgroundImage": {
+        "hero": "url('/img/hero-image.png')"
+      },
+      "colors": {
+        "background": "var(--background)",
+        "foreground": "var(--foreground)",
+        "block": "var(--block)"
+      },
+      "fontFamily": {
+        "sans": [
+          "var(--font-be-vietnam-pro)",
+          "sans-serif"
+        ]
+      }
+    }
+  }
+}
