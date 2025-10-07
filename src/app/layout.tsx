@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
+import NavButton from "@/components/NavButton";
+import Image from "next/image";
 import "./globals.css";
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -23,6 +25,14 @@ export default function RootLayout({
       <body
         className={`${beVietnamPro.variable} antialiased`}
       >
+        <header className="flex items-center justify-between p-5">
+          <Image src="/icons/Logo.svg" alt="Logo" width={150} height={150} />
+          <nav className="flex gap-5 mx-5">
+            <NavButton href="/" label="Home" />
+            <NavButton href="/collections" label="Collections" />
+          </nav>
+        </header>
+        <hr className="flex text-[var(--block)] mb-20" />
         {children}
       </body>
     </html>

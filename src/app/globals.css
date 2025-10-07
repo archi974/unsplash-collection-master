@@ -31,6 +31,11 @@ body {
   flex-direction: column;
 }
 
+::selection {
+  background: transparent;
+  color: linear-gradient(to bottom right, #000, #fff);;
+}
+
 h1 {
   font-size: 2.25rem;
   font-weight: 600;
