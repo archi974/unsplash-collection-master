@@ -25,14 +25,13 @@ export default function RootLayout({
       <body
         className={`${beVietnamPro.variable} antialiased`}
       >
-        <header className="flex items-center justify-between p-5">
+        <header className="flex shrink-0 items-center justify-between p-5 border-b border-[var(--block)] mb-20">
           <Image src="/icons/Logo.svg" alt="Logo" width={150} height={150} />
           <nav className="flex gap-5 mx-5">
             <NavButton href="/" label="Home" />
             <NavButton href="/collections" label="Collections" />
           </nav>
         </header>
-        <hr className="flex text-[var(--block)] mb-20" />
         {children}
       </body>
     </html>
