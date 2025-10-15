@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { UnsplashPhoto } from "@/types/unsplash";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SearchHome() {
     const [query, setQuery] = useState("");
@@ -41,13 +42,17 @@ export default function SearchHome() {
         content = (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                 {photos.map((photo) => (
-                    <div key={photo.id} className="cursor-pointer">
+                    <Link
+                        key={photo.id}
+                        className="cursor-pointer"
+                        href={`/photo/${photo.id}`}
+                    >
                         <img
                             src={photo.urls.small}
                             alt={photo.alt_description ?? ""}
                             className="rounded-lg object-cover w-full h-48 hover:opacity-80 transition"
                         />
-                    </div>
+                    </Link>
                 ))}
             </div>
         );
