@@ -12,17 +12,17 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
     const photo: UnsplashPhoto = await fetchPhotoById(id);
 
     return (
-        <main className="flex flex-1 gap-5 mx-auto my-5">
-            <div className="flex-shrink-0">
+        <main className="flex flex-col lg:flex-row flex-1 gap-5 mx-auto mb-15 px-4">
+            <div className="flex-1 flex justify-center">
                 <img
                     src={photo.urls.regular}
                     alt={photo.alt_description ?? ""}
                     width={photo.width}
                     height={photo.height}
-                    className="w-full h-full object-cover rounded-sm"
+                    className="w-full max-w-[750px] h-auto object-cover rounded-sm"
                 />
             </div>
-            <div className="flex flex-col flex-2 gap-5">
+            <div className="flex flex-col flex-1 gap-5">
                 <div className="flex items-center gap-4">
                     <img src={photo.user.profile_image.medium} className="rounded-full" alt="user profile" />
                     <p>{photo.user.name}</p>
