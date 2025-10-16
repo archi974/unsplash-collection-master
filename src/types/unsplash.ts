@@ -1,8 +1,10 @@
 export interface UnsplashPhoto {
     id: string;
-    alt_description: string | null;
-    description?: string | null;
-    created_at?: string;
+    alt_description: string;
+    description: string;
+    created_at: string;
+    width: number;
+    height: number;
     urls: {
         small: string;
         regular: string;
@@ -11,6 +13,11 @@ export interface UnsplashPhoto {
     user: {
         name: string;
         username: string;
+        profile_image: {
+            small: string;
+            medium: string;
+            large: string;
+        }
         links: {
             html: string;
         };

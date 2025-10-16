@@ -8,17 +8,20 @@ interface PhotoPageProps {
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
-    const photo: UnsplashPhoto = await fetchPhotoById(params.id);
+    const { id } = params;
+    const photo: UnsplashPhoto = await fetchPhotoById(id);
 
     return (
-        <main className="flex gap-5 mx-14">
-            <img
-                src={photo.urls.regular}
-                alt={photo.alt_description}
-                width={photo.width}
-                height={photo.height}
-                className="flex flex-1 h-full w-auto rounded-sm "
-            />
+        <main className="flex flex-1 gap-5 mx-auto my-5">
+            <div className="flex-shrink-0">
+                <img
+                    src={photo.urls.regular}
+                    alt={photo.alt_description ?? ""}
+                    width={photo.width}
+                    height={photo.height}
+                    className="w-full h-full object-cover rounded-sm"
+                />
+            </div>
             <div className="flex flex-col flex-2 gap-5">
                 <div className="flex items-center gap-4">
                     <img src={photo.user.profile_image.medium} className="rounded-full" alt="user profile" />
