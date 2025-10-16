@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 export default function CollectionsPage() {
     const [collections, setCollections] = useState<any[]>([]);
@@ -34,21 +35,14 @@ export default function CollectionsPage() {
             <h2>Collection</h2>
             <p>Explore the world through collections of beautiful</p>
             <p>photos free to use under the <a href="/">Unsplash License</a>.</p>
-            <div className="p-6">
-                <div
-                    className="border-2 border-dashed border-gray-400 rounded-xl p-6 cursor-pointer text-center hover:bg-gray-100 transition"
-                    onClick={() => setIsModalOpen(true)}
-                >
-                    + Ajouter une collection
-                </div>
-
-                <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+                <div className="gap-4">
                     {collections.map((col) => (
                         <div
                             key={col._id}
-                            className="relative rounded-xl overflow-hidden shadow-md group"
+                            className="relative flex flex-col aspect-square w-full max-w-[500px] max-h-[500px] overflow-hidden"
                         >
-                            <div className="aspect-square bg-gray-200 flex items-center justify-center">
+                            <div className="flex rounded-xl items-center justify-center h-full shadow-md">
                                 {col.src?.length > 0 ? (
                                     <img
                                         src={col.src[0]}
@@ -56,43 +50,60 @@ export default function CollectionsPage() {
                                         className="object-cover w-full h-full"
                                     />
                                 ) : (
-                                    <span className="text-gray-500">Aucune image</span>
+                                    <div className="text-gray-500">
+                                        <div className="bg-[var(--block)] flex flex-2"></div>
+                                        <p>Empty</p>
+                                    </div>
                                 )}
                             </div>
-                            <div className="p-2 text-center font-medium">{col.title}</div>
+                            <h3 className="p-2 font-medium">{col.title}</h3>
                         </div>
                     ))}
                 </div>
-                
-                {isModalOpen && (
-                    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-                        <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
-                            <h2 className="text-lg font-semibold mb-3">Nouvelle collection</h2>
-                            <input
-                                type="text"
-                                placeholder="Titre de la collection"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                className="border w-full rounded-md p-2 mb-4"
-                            />
-                            <div className="flex justify-end gap-2">
-                                <button
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
-                                >
-                                    Annuler
-                                </button>
-                                <button
-                                    onClick={handleCreateCollection}
-                                    className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
-                                >
-                                    Créer
-                                </button>
-                            </div>
+
+                <div
+                    className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 transition
+                    aspect-square"
+                    onClick={() => setIsModalOpen(true)}
+                >
+                    <Image
+                        src="/icons/plus.svg"
+                        alt="Icône ajout"
+                        width={24}
+                        height={24}
+                    />
+                    <p>Add new collection</p>
+                </div>
+
+            </div>
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-xl w-80 shadow-lg">
+                        <h2 className="text-lg font-semibold mb-3">Nouvelle collection</h2>
+                        <input
+                            type="text"
+                            placeholder="Titre de la collection"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="border w-full rounded-md p-2 mb-4"
+                        />
+                        <div className="flex justify-end gap-2">
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300"
+                            >
+                                Annuler
+                            </button>
+                            <button
+                                onClick={handleCreateCollection}
+                                className="px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700"
+                            >
+                                Créer
+                            </button>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
         </>
     )
 }
