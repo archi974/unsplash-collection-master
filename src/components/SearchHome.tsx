@@ -19,7 +19,7 @@ export default function SearchHome() {
             setLoading(true);
             setError(null);
 
-            const res = await fetch(`/api/collections/get?query=${encodeURIComponent(query)}`);
+            const res = await fetch(`/api/unsplashData/get?query=${encodeURIComponent(query)}`);
             if (!res.ok) {
                 throw new Error(`Erreur lors de la récupération des photos (${res.status})`);
             }
