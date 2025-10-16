@@ -8,7 +8,7 @@ interface PhotoPageProps {
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
-    const { id } = params;
+    const { id } = await params;
     const photo: UnsplashPhoto = await fetchPhotoById(id);
 
     return (
