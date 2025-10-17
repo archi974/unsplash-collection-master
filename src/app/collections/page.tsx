@@ -42,9 +42,9 @@ export default function CollectionsPage() {
                     {collections.map((col) => (
                         <div
                             key={col._id}
-                            className="relative flex flex-col aspect-square w-full max-w-[500px] max-h-[500px] overflow-hidden"
+                            className="group relative flex flex-col gap-2 aspect-square w-full max-w-[500px] max-h-[500px] overflow-hidden cursor-pointer"
                         >
-                            <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)]">
+                            <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
                                 {col.src?.length > 0 ? (
                                     <img
                                         src={col.src[0]}
@@ -52,20 +52,24 @@ export default function CollectionsPage() {
                                         className="object-cover w-full h-full"
                                     />
                                 ) : (
-                                    <div className="text-gray-500">
+                                    <div>
                                         <div className="bg-[var(--block)] flex flex-2"></div>
-                                        <h2>Empty</h2>
                                     </div>
                                 )}
                             </div>
-                            <h3 className="p-2 font-bold">{col.title}</h3>
-                            <p>23 photos</p>
+                            <div>
+                                <h2 className="font-bold">{col.title}</h2>
+                                <p className="text-[var(--foreground)]/35 text-sm">
+                                    {col.photos?.length || 0}
+                                    {col.photos?.length === 1 ? " photo" : " photos"}
+                                </p>
+                            </div>
                         </div>
                     ))}
                 </div>
 
                 <div
-                    className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl cursor-pointer hover:bg-gray-100 transition
+                    className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl cursor-pointer hover:bg-[var(--block)]/50 transition
                     aspect-square"
                     onClick={() => setIsModalOpen(true)}
                 >
