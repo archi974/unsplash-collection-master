@@ -5,6 +5,8 @@
   --foreground: #121826;
   --block: #E5E7EB;
   --block-hover: #E5E7EBCC;
+  --title-gradient-start: #F2C595;
+  --title-gradient-end: #8E3383;
   font-family: var(--font-be-vietnam-pro), sans-serif;
 }
 
@@ -23,6 +25,13 @@
   }
 } */
 
+@layer utilities {
+  .title-gradient {
+    @apply bg-gradient-to-r from-[var(--title-gradient-start)] to-[var(--title-gradient-end)] bg-clip-text text-transparent;
+    -webkit-background-clip: text;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -38,7 +47,7 @@ body {
 
 h1 {
   font-size: 2.25rem;
-  font-weight: 600;
+  font-family: var(--font-be-vietnam-pro), sans-serif;
 }
 
 h2,
@@ -50,7 +59,6 @@ p {
   font-size: 14px;
 }
 
-h1,
 h2,
 h3,
 p,

@@ -31,11 +31,13 @@ export default function CollectionsPage() {
         }
     }
     return (
-        <>
-            <h2>Collection</h2>
-            <p>Explore the world through collections of beautiful</p>
-            <p>photos free to use under the <a href="/">Unsplash License</a>.</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+        <main className="flex flex-col items-center gap-5 flex-1">
+            <section className="text-center">
+                <h1 className="title-gradient text-5xl font-semibold">Collection</h1>
+                <p>Explore the world through collections of beautiful</p>
+                <p>photos free to use under the <a href="/">Unsplash License</a>.</p>
+            </section>
+            <div className="grid grid-cols-2 w-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                 <div className="gap-4">
                     {collections.map((col) => (
                         <div
@@ -104,6 +106,6 @@ export default function CollectionsPage() {
                     </div>
                 </div>
             )}
-        </>
+        </main>
     )
 }
