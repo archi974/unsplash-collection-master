@@ -35,7 +35,7 @@ export default function CollectionsPage() {
             <section className="text-center">
                 <h1 className="title-gradient text-5xl font-semibold">Collection</h1>
                 <p>Explore the world through collections of beautiful</p>
-                <p>photos free to use under the <a href="/">Unsplash License</a>.</p>
+                <p>photos free to use under the <a href="https://unsplash.com/fr/licence">Unsplash License</a>.</p>
             </section>
             <div className="grid grid-cols-2 w-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
                 <div className="gap-4">
@@ -44,7 +44,7 @@ export default function CollectionsPage() {
                             key={col._id}
                             className="relative flex flex-col aspect-square w-full max-w-[500px] max-h-[500px] overflow-hidden"
                         >
-                            <div className="flex rounded-xl items-center justify-center h-full shadow-md">
+                            <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)]">
                                 {col.src?.length > 0 ? (
                                     <img
                                         src={col.src[0]}
@@ -54,11 +54,12 @@ export default function CollectionsPage() {
                                 ) : (
                                     <div className="text-gray-500">
                                         <div className="bg-[var(--block)] flex flex-2"></div>
-                                        <p>Empty</p>
+                                        <h2>Empty</h2>
                                     </div>
                                 )}
                             </div>
-                            <h3 className="p-2 font-medium">{col.title}</h3>
+                            <h3 className="p-2 font-bold">{col.title}</h3>
+                            <p>23 photos</p>
                         </div>
                     ))}
                 </div>
@@ -74,7 +75,7 @@ export default function CollectionsPage() {
                         width={24}
                         height={24}
                     />
-                    <p>Add new collection</p>
+                    <h2>Add new collection</h2>
                 </div>
 
             </div>
