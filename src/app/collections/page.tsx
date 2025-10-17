@@ -37,12 +37,11 @@ export default function CollectionsPage() {
                 <p>Explore the world through collections of beautiful</p>
                 <p>photos free to use under the <a href="https://unsplash.com/fr/licence">Unsplash License</a>.</p>
             </section>
-            <div className="grid grid-cols-2 w-full sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
-                <div className="gap-4">
+            <div className="flex flex-wrap w-full  gap-4 p-4 mx-auto justify-center">
                     {collections.map((col) => (
                         <div
                             key={col._id}
-                            className="group relative flex flex-col gap-2 aspect-square w-full max-w-[500px] max-h-[500px] overflow-hidden cursor-pointer"
+                            className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
                         >
                             <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
                                 {col.src?.length > 0 ? (
@@ -66,11 +65,10 @@ export default function CollectionsPage() {
                             </div>
                         </div>
                     ))}
-                </div>
 
                 <div
-                    className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl cursor-pointer hover:bg-[var(--block)]/50 transition
-                    aspect-square"
+                    className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl hover:bg-[var(--block)]/50 transition
+                    aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
                     onClick={() => setIsModalOpen(true)}
                 >
                     <Image
