@@ -22,6 +22,18 @@ export default function AddToCollectionModal({ photo, onClose }: AddToCollection
     async function handleSelect(collectionId: string) {
         setLoading(true);
         try {
+            const selectedCollection = collections.find(c => c._id === collectionId);
+
+            const alreadyExists = selectedCollection?.photos?.some(
+                (p: { src: string }) => p.src === photo.urls.small
+            );
+
+            if (alreadyExists) {
+                alert("⚠️ Cette photo est déjà dans cette collection !");
+                setLoading(false);
+                return;
+            }
+
             const res = await fetch(`/api/collection/${collectionId}/add`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
