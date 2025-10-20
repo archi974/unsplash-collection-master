@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import CollectionCard from "./CollectionCard";
 import { UnsplashPhoto } from "@/types/unsplash";
 
@@ -11,12 +11,16 @@ interface AddToCollectionModalProps {
 
 export default function AddToCollectionModal({ photo, onClose }: AddToCollectionModalProps) {
     const [collections, setCollections] = useState<any[]>([]);
+    const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetch("/api/collection")
             .then((res) => res.json())
-            .then(setCollections);
+            .then((data) => {
+                const sorted = [...data].sort((a, b) => a.title.localeCompare(b.title));
+                setCollections(sorted);
+            })
     }, []);
 
     async function handleSelect(collectionId: string) {
