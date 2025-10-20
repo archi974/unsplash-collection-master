@@ -13,16 +13,16 @@ export default function CollectionCard({ id, title, photos, onSelect }: Collecti
   return (
     <div
       onClick={() => onSelect(id)}
-      className="flex shadow-md justify-between"
+      className="flex justify-between items-center p-2 shadow-md cursor-pointer group hover:bg-[var(--block)] transition-colors"
     >
-      <div className="flex gap-4">
-        <div className="bg-[var(--block)] aspect-square w-full rounded-md flex items-center justify-center">
+      <div className="flex gap-4 items-center">
+        <div className="relative aspect-square w-[75px] h-[75px] flex items-center justify-center overflow-hidden">
           {count > 0 ? (
             <Image
               src={photos[0].src}
               alt={photos[0].alt || title}
               fill
-              className="object-cover"
+              className="object-cover rounded-md"
             />
           ) : (
             <p>Empty</p>
@@ -30,10 +30,10 @@ export default function CollectionCard({ id, title, photos, onSelect }: Collecti
         </div>
         <section>
           <h3 className="font-semibold">{title}</h3>
-          <p className="text-xs opacity-80">{count} {count === 1 ? "photo" : "photos"}</p>
+          <p className="text-xs opacity-80 whitespace-nowrap">{count} {count === 1 ? "photo" : "photos"}</p>
         </section>
       </div>
-      <p className="text-white font-semibold text-sm">+ Add to collection</p>
+      <p className="font-semibold text-sm opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ease-out">+ Add to collection</p>
 
     </div>
   );
