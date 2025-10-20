@@ -1,5 +1,6 @@
 import { fetchPhotoById } from "@/app/api/services/unsplashService";
 import { UnsplashPhoto } from "@/types/unsplash";
+import AddToCollectionButton from "@/components/AddToCollectionButton";
 
 interface PhotoPageProps {
     params: {
@@ -10,6 +11,7 @@ interface PhotoPageProps {
 export default async function PhotoPage({ params }: PhotoPageProps) {
     const { id } = await params;
     const photo: UnsplashPhoto = await fetchPhotoById(id);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <main className="flex flex-col lg:flex-row flex-1 gap-5 mx-auto mb-15 px-4">
@@ -32,14 +34,8 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
                     day: "numeric",
                     year: "numeric",
                 }).format(new Date(photo.created_at))}</p>
-                <div className="flex gap-4 [&>button]:bg-[var(--block)] [&>button]:px-4 [&>button]:py-2 [&>button]:rounded-md [&>button]:hover:opacity-80 [&>button]:transition [&>button]:cursor-pointer">
-                    <button>
-                        Add to Collection
-                    </button>
-                    <button>
-                        Download
-                    </button>
-                </div>
+                
+                <AddToCollectionButton photo={photo} />
 
                 <h2>Collections</h2>
             </div>
