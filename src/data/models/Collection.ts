@@ -3,6 +3,7 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 export interface IPhoto {
   src: string;
   alt: string;
+  unsplashId: string;
 }
 
 export interface ICollection extends Document {
@@ -11,13 +12,11 @@ export interface ICollection extends Document {
   createdAt: Date;
 }
 
-const photoSchema = new Schema<IPhoto>(
-  {
+const photoSchema = new Schema<IPhoto>({
     src: { type: String, required: true },
     alt: { type: String, required: true },
-  },
-  { _id: false }
-)
+    unsplashId: { type: String, required: true },
+});
 
 const collectionSchema = new Schema<ICollection>({
   title: { type: String, required: true },

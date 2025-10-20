@@ -4,21 +4,21 @@ import Collection from "@/data/models/Collection";
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   await connectMongo();
 
   try {
-    const { src, alt } = await req.json();
-    const { id } = params;
+    const { src, alt, unsplashId } = await req.json();
+    const { id } = await params;
 
-    if (!src || !alt) {
+    if (!src || !alt || !unsplashId) {
       return NextResponse.json({ error: "Missing photo data" }, { status: 400 });
     }
 
     const updatedCollection = await Collection.findByIdAndUpdate(
       id,
-      { $push: { photos: { src, alt } } },
+      { $push: { photos: { src, alt, unsplashId } } },
       { new: true }
     );
 

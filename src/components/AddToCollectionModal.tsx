@@ -25,32 +25,28 @@ export default function AddToCollectionModal({ photo, onClose }: AddToCollection
 
     const filteredCollections = useMemo(() => {
         const query = search.trim().toLowerCase();
-        if (!query) return collections;
-        return collections.filter((col) =>
-            col.title.toLowerCase().includes(query)
-        );
-    }, [collections, search])
+
+        return collections
+            .filter(
+                (col) =>
+                    !col.photos?.some((p: { unsplashId: string }) => p.unsplashId === photo.id)
+
+            )
+            .filter((col) =>
+                col.title.toLowerCase().includes(query)
+            );
+    }, [collections, search, photo.urls.small]);
 
     async function handleSelect(collectionId: string) {
         setLoading(true);
-        try {
-            const selectedCollection = collections.find(c => c._id === collectionId);
-            const alreadyExists = selectedCollection?.photos?.some(
-                (p: { src: string }) => p.src === photo.urls.small
-            );
-
-            if (alreadyExists) {
-                alert("⚠️ Cette photo est déjà dans cette collection !");
-                setLoading(false);
-                return;
-            }
-
+        try {            
             const res = await fetch(`/api/collection/${collectionId}/add`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     src: photo.urls.small,
                     alt: photo.alt_description || "Unsplash photo",
+                    unsplashId: photo.id,
                 }),
             });
 
