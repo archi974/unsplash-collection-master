@@ -23,11 +23,18 @@ export default function AddToCollectionModal({ photo, onClose }: AddToCollection
             })
     }, []);
 
+    const filteredCollections = useMemo(() => {
+        const query = search.trim().toLowerCase();
+        if (!query) return collections;
+        return collections.filter((col) =>
+            col.title.toLowerCase().includes(query)
+        );
+    }, [collections, search])
+
     async function handleSelect(collectionId: string) {
         setLoading(true);
         try {
             const selectedCollection = collections.find(c => c._id === collectionId);
-
             const alreadyExists = selectedCollection?.photos?.some(
                 (p: { src: string }) => p.src === photo.urls.small
             );
@@ -74,18 +81,31 @@ export default function AddToCollectionModal({ photo, onClose }: AddToCollection
 
                 <h2 className="text-xl font-semibold mb-4">Add to Collection</h2>
 
+                <input
+                    type="text"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search collections..."
+                    className="w-full mb-4 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-gray-200"
+                />
+
                 {loading && <p className="text-sm text-gray-500 mb-2">Ajout en cours...</p>}
 
-
-                {collections.map((col) => (
-                    <CollectionCard
-                        key={col._id}
-                        id={col._id}
-                        title={col.title}
-                        photos={col.photos || []}
-                        onSelect={handleSelect}
-                    />
-                ))}
+                {filteredCollections.length > 0 ? (
+                    filteredCollections.map((col) => (
+                        <CollectionCard
+                            key={col._id}
+                            id={col._id}
+                            title={col.title}
+                            photos={col.photos || []}
+                            onSelect={handleSelect}
+                        />
+                    ))
+                ) : (
+                    <p className="text-sm text-gray-400 text-center col-span-full">
+                        No collections found.
+                    </p>
+                )}
             </div>
         </div>
     );
