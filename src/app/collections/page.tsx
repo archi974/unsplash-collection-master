@@ -46,14 +46,51 @@ export default function CollectionsPage() {
                         className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
                     >
                         <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
-                            {col.src?.length > 0 ? (
+                            {col.photos?.length === 0 && (
+                                <div className="bg-[var(--block)] flex flex-2"></div>
+                            )}
+                            {col.photos?.length === 1 && (
                                 <img
-                                    src={col.src[0]}
-                                    alt={col.alt[0] || "Collection image"}
+                                    src={col.photos[0].src}
+                                    alt={col.photos[0].alt || "Collection image"}
                                     className="object-cover w-full h-full"
                                 />
-                            ) : (
-                                <div className="bg-[var(--block)] flex flex-2"></div>
+                            )}
+                            {col.photos?.length === 2 && (
+                                <div className="grid grid-cols-2 gap-[2px] w-full h-full">
+                                    {col.photos.slice(0, 2).map((photo: any, i: number) => (
+                                        <img
+                                            key={i}
+                                            src={photo.src}
+                                            alt={photo.alt}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    ))}
+                                </div>
+                            )}
+
+                            {col.photos?.length >= 3 && (
+                                <div className="grid grid-cols-2 grid-rows-2 gap-[2px] w-full h-full">
+                                    {/* Image principale à gauche */}
+                                    <div className="row-span-2">
+                                        <img
+                                            src={col.photos[0].src}
+                                            alt={col.photos[0].alt}
+                                            className="object-cover w-full h-full"
+                                        />
+                                    </div>
+                                    {/* Deux images empilées à droite */}
+                                    <img
+                                        src={col.photos[1].src}
+                                        alt={col.photos[1].alt}
+                                        className="object-cover w-full h-full"
+                                    />
+                                    <img
+                                        src={col.photos[2].src}
+                                        alt={col.photos[2].alt}
+                                        className="object-cover w-full h-full"
+                                    />
+                                </div>
                             )}
                         </div>
                         <div>
