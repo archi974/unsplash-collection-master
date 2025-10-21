@@ -12,7 +12,12 @@ export default function CollectionsPage() {
     useEffect(() => {
         fetch('/api/collection')
             .then((res) => res.json())
-            .then(setCollections);
+            .then((data) => {
+                const sorted = [...data].sort((a, b) =>
+                    a.title.localeCompare(b.title, "en", { sensitivity: "base" })
+                );
+                setCollections(sorted);
+            });
     }, []);
 
     async function handleCreateCollection() {
