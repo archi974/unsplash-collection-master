@@ -1,17 +1,15 @@
 import { fetchPhotoById } from "@/app/api/services/unsplashService";
 import { UnsplashPhoto } from "@/types/unsplash";
 import AddToCollectionButton from "@/components/AddToCollectionButton";
+import PhotoCollectionsList from "@/components/photoCollectionsList";
 
 interface PhotoPageProps {
-    params: {
-        id: string;
-    };
+    params: { id: string };
 }
 
 export default async function PhotoPage({ params }: PhotoPageProps) {
     const { id } = await params;
     const photo: UnsplashPhoto = await fetchPhotoById(id);
-    // const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
         <main className="flex flex-col lg:flex-row flex-1 gap-5 mx-auto mb-15 px-4">
@@ -29,15 +27,19 @@ export default async function PhotoPage({ params }: PhotoPageProps) {
                     <img src={photo.user.profile_image.medium} className="rounded-full" alt="user profile" />
                     <p>{photo.user.name}</p>
                 </div>
-                <p>Published on {new Intl.DateTimeFormat("en-US", {
+                <p>Published on{" "}
+                    {new Intl.DateTimeFormat("en-US", {
                     month: "long",
                     day: "numeric",
                     year: "numeric",
-                }).format(new Date(photo.created_at))}</p>
-                
+                }).format(new Date(photo.created_at))}
+                </p>
+
                 <AddToCollectionButton photo={photo} />
 
                 <h2>Collections</h2>
+                <PhotoCollectionsList photo={photo} />
+
             </div>
         </main>
     )
