@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CollectionsPage() {
     const [collections, setCollections] = useState<any[]>([]);
@@ -38,33 +39,32 @@ export default function CollectionsPage() {
                 <p>photos free to use under the <a href="https://unsplash.com/fr/licence">Unsplash License</a>.</p>
             </section>
             <div className="flex flex-wrap w-full  gap-4 p-4 mx-auto justify-center">
-                    {collections.map((col) => (
-                        <div
-                            key={col._id}
-                            className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
-                        >
-                            <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
-                                {col.src?.length > 0 ? (
-                                    <img
-                                        src={col.src[0]}
-                                        alt={col.alt[0] || "Collection image"}
-                                        className="object-cover w-full h-full"
-                                    />
-                                ) : (
-                                    <div>
-                                        <div className="bg-[var(--block)] flex flex-2"></div>
-                                    </div>
-                                )}
-                            </div>
-                            <div>
-                                <h2 className="font-bold">{col.title}</h2>
-                                <p className="text-[var(--foreground)]/35 text-sm">
-                                    {col.photos?.length || 0}
-                                    {col.photos?.length === 1 ? " photo" : " photos"}
-                                </p>
-                            </div>
+                {collections.map((col) => (
+                    <Link
+                        key={col._id}
+                        href={`/collections/${col._id}`}
+                        className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
+                    >
+                        <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
+                            {col.src?.length > 0 ? (
+                                <img
+                                    src={col.src[0]}
+                                    alt={col.alt[0] || "Collection image"}
+                                    className="object-cover w-full h-full"
+                                />
+                            ) : (
+                                <div className="bg-[var(--block)] flex flex-2"></div>
+                            )}
                         </div>
-                    ))}
+                        <div>
+                            <h2 className="font-bold">{col.title}</h2>
+                            <p className="text-[var(--foreground)]/35 text-sm">
+                                {col.photos?.length || 0}
+                                {col.photos?.length === 1 ? " photo" : " photos"}
+                            </p>
+                        </div>
+                    </Link>
+                ))}
 
                 <div
                     className="bg-[var(--block)] flex flex-col justify-center items-center rounded-xl hover:bg-[var(--block)]/50 transition
