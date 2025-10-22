@@ -40,7 +40,7 @@ export default function SearchHome() {
         content = <p className="mt-4 text-red-500">{error}</p>;
     } else if (photos.length > 0) {
         content = (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 mb-20">
                 {photos.map((photo) => (
                     <Link
                         key={photo.id}
