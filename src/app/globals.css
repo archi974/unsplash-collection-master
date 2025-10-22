@@ -43,10 +43,6 @@
   h2, h3 {
     @apply font-semibold text-base;
   }
-
-  a {
-    @apply underline;
-  }
 }
 
 @layer utilities {

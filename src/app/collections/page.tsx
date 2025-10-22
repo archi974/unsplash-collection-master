@@ -50,7 +50,7 @@ export default function CollectionsPage() {
                         href={`/collections/${col._id}`}
                         className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
                     >
-                        <div className="flex rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
+                        <div className="flex flex-2 gap-1 rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
                             {col.photos?.length === 0 && (
                                 <div className="bg-[var(--block)] flex flex-2"></div>
                             )}
@@ -58,45 +58,46 @@ export default function CollectionsPage() {
                                 <img
                                     src={col.photos[0].src}
                                     alt={col.photos[0].alt || "Collection image"}
-                                    className="object-cover w-full h-full"
+                                    className="object-cover w-full h-full rounded-lg"
                                 />
                             )}
+
                             {col.photos?.length === 2 && (
-                                <div className="grid grid-cols-2 gap-[2px] w-full h-full">
-                                    {col.photos.slice(0, 2).map((photo: any, i: number) => (
-                                        <img
-                                            key={i}
-                                            src={photo.src}
-                                            alt={photo.alt}
-                                            className="object-cover w-full h-full"
-                                        />
-                                    ))}
+                                <div className="grid grid-cols-2 gap-1 w-full h-full">
+                                    <img
+                                        src={col.photos[0].src}
+                                        alt={col.photos[0].alt}
+                                        className="object-cover w-full h-full rounded-l-lg"
+                                    />
+                                    <img
+                                        src={col.photos[1].src}
+                                        alt={col.photos[1].alt}
+                                        className="object-cover w-full h-full rounded-r-lg"
+                                    />
                                 </div>
                             )}
 
                             {col.photos?.length >= 3 && (
-                                <div className="grid grid-cols-2 grid-rows-2 gap-[2px] w-full h-full">
-                                    {/* Image principale à gauche */}
-                                    <div className="row-span-2">
-                                        <img
-                                            src={col.photos[0].src}
-                                            alt={col.photos[0].alt}
-                                            className="object-cover w-full h-full"
-                                        />
-                                    </div>
-                                    {/* Deux images empilées à droite */}
+                                <div className="grid grid-cols-[2fr_1fr] grid-rows-2 gap-1 w-full h-full aspect-[3/2] overflow-hidden">
+                                    {/* Image principale (grande à gauche sur 2 lignes) */}
+                                    <img
+                                        src={col.photos[0].src}
+                                        alt={col.photos[0].alt}
+                                        className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg row-span-2"
+                                    />
                                     <img
                                         src={col.photos[1].src}
                                         alt={col.photos[1].alt}
-                                        className="object-cover w-full h-full"
+                                        className="object-cover w-full h-full rounded-tr-lg"
                                     />
                                     <img
                                         src={col.photos[2].src}
                                         alt={col.photos[2].alt}
-                                        className="object-cover w-full h-full"
+                                        className="object-cover w-full h-full rounded-br-lg"
                                     />
                                 </div>
                             )}
+
                         </div>
                         <div>
                             <h2 className="font-bold">{col.title}</h2>
