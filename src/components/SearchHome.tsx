@@ -93,6 +93,19 @@ export default function SearchHome() {
         }
     }, [page, fetchPhotos]);
 
+    useEffect(() => {
+        function handleReset() {
+            setQuery("");
+            setPhotos([]);
+            setPage(1);
+            setHasMore(true);
+            setError(null);
+        }
+
+        window.addEventListener("reset-search", handleReset);
+        return () => window.removeEventListener("reset-search", handleReset);
+    }, []);
+
     return (
         <>
             <form
@@ -116,7 +129,7 @@ export default function SearchHome() {
                     <Link
                         key={`${photo.id}-${photo.urls.small}`}
                         href={`/photo/${photo.id}`}
-                        className="cursor-pointer"
+                        className="cursor-pointer transition-opacity duration-300 ease-in-out"
                     >
                         <img
                             src={photo.urls.small}
