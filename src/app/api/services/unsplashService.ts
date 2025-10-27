@@ -29,7 +29,7 @@ export async function fetchPhotos(
     }
 
     const data = await res.json();
-    return data.results as UnsplashPhoto[];
+    return (data as { results: UnsplashPhoto[] }).results;
 }
 
 /**
