@@ -66,6 +66,8 @@ export default function SearchHome() {
         e.preventDefault();
         if (!query.trim()) return;
 
+        window.dispatchEvent(new Event("start-search"));
+
         setShowIntro(false);
 
         setPhotos([]);
@@ -112,7 +114,7 @@ export default function SearchHome() {
 
     return (
         <main
-            className="home-hero flex flex-1 flex-col items-center justify-center gap-5 text-center px-5 h-full">
+            className="home-hero flex flex-1 flex-col items-center justify-center gap-5 text-center px-5 h-full z-1">
 
             <div className={`flex flex-col items-center text-center transition-all duration-700 ease-in-out ${showIntro
                 ? "opacity-100 translate-y-0 mb-10"
@@ -124,7 +126,7 @@ export default function SearchHome() {
             <form
                 onSubmit={handleSearch}
                 className={`flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5 transition-all duration-700 ease-in-out ${
-                    showIntro ? "mt-0" : "-mt-30"
+                    showIntro ? "mt-0" : "-mt-30 bg-[var(--background)]"
                 }`}
             >
                 <input
