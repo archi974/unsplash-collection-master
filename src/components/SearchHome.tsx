@@ -12,6 +12,7 @@ export default function SearchHome() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [hasMore, setHasMore] = useState(true);
+    const [showIntro, setShowIntro] = useState(true);
     const observerRef = useRef<HTMLDivElement | null>(null);
 
     // 🔹 Fonction pour charger des photos
@@ -34,8 +35,8 @@ export default function SearchHome() {
             }
             const data: UnsplashPhoto[] = await res.json();
 
-            if(!data || data.length === 0) {
-                if(currentPage === 1) {
+            if (!data || data.length === 0) {
+                if (currentPage === 1) {
                     setPhotos([]);
                     setError("Aucun résultat trouvé.");
                 }
@@ -65,6 +66,8 @@ export default function SearchHome() {
         e.preventDefault();
         if (!query.trim()) return;
 
+        setShowIntro(false);
+
         setPhotos([]);
         setPage(1);
         setHasMore(true);
@@ -88,7 +91,7 @@ export default function SearchHome() {
     }, [hasMore, loading, error]);
 
     useEffect(() => {
-        if (page > 1 && query.trim()){
+        if (page > 1 && query.trim()) {
             fetchPhotos(query, page);
         }
     }, [page, fetchPhotos]);
@@ -100,6 +103,7 @@ export default function SearchHome() {
             setPage(1);
             setHasMore(true);
             setError(null);
+            setShowIntro(true);
         }
 
         window.addEventListener("reset-search", handleReset);
@@ -107,10 +111,21 @@ export default function SearchHome() {
     }, []);
 
     return (
-        <>
+        <main
+            className="home-hero flex flex-1 flex-col items-center justify-center gap-5 text-center px-5 h-full">
+
+            <div className={`flex flex-col items-center text-center transition-all duration-700 ease-in-out ${showIntro
+                ? "opacity-100 translate-y-0 mb-10"
+                : "opacity-0 -translate-y-10 mb-0 pointer-events-none"
+                }`}>
+                <h1 className="bg-[var-(--foreground)]">Search</h1>
+                <p>Search high-resolution images from Unsplash</p>
+            </div>
             <form
                 onSubmit={handleSearch}
-                className="flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5"
+                className={`flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5 transition-all duration-700 ease-in-out ${
+                    showIntro ? "mt-0" : "-mt-30"
+                }`}
             >
                 <input
                     type="search"
@@ -147,6 +162,6 @@ export default function SearchHome() {
             )}
 
             <div ref={observerRef} className="h-10 w-full"></div>
-        </>
+        </main>
     );
 }
