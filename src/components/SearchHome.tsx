@@ -126,7 +126,7 @@ export default function SearchHome() {
             <form
                 onSubmit={handleSearch}
                 className={`flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5 transition-all duration-700 ease-in-out ${
-                    showIntro ? "mt-0" : "-mt-30 bg-[var(--background)]"
+                    showIntro ? "mt-0" : "-mt-20 bg-[var(--background)]"
                 }`}
             >
                 <input

@@ -100,7 +100,7 @@ input::placeholder {
   left: 0;
   height: 100px;
   width: 100%;
-  background: linear-gradient(to right, #f97316, #ec4899, #f43f5e);
+  background: linear-gradient(to right, var(--title-gradient-start), var(--title-gradient-end));
   transition: height 0.5s ease, opacity 0.5s ease;
   opacity: 0;
 }
