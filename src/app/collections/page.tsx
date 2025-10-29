@@ -43,16 +43,16 @@ export default function CollectionsPage() {
                 <p>Explore the world through collections of beautiful</p>
                 <p>photos free to use under the <a href="https://unsplash.com/fr/licence">Unsplash License</a>.</p>
             </section>
-            <div className="flex flex-wrap w-full  gap-4 p-4 mx-auto justify-center">
+            <div className="flex flex-wrap w-full gap-4 p-4 mx-auto justify-center">
                 {collections.map((col) => (
                     <Link
                         key={col._id}
                         href={`/collections/${col._id}`}
-                        className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] max-h-[350px] overflow-hidden cursor-pointer"
+                        className="group relative flex flex-col gap-2 aspect-square w-full max-w-[350px] overflow-hidden cursor-pointer"
                     >
-                        <div className="flex flex-2 gap-1 rounded-xl items-center justify-center h-full bg-[var(--block)] transition group-hover:bg-[var(--block)]/50">
+                        <div className="grid w-full h-full rounded-xl bg-[var(--block)] overflow-hidden transition group-hover:bg-[var(--block)]/50">
                             {col.photos?.length === 0 && (
-                                <div className="bg-[var(--block)] flex flex-2"></div>
+                                <div className="bg-[var(--block)] w-full h-full"></div>
                             )}
                             {col.photos?.length === 1 && (
                                 <img
@@ -78,8 +78,7 @@ export default function CollectionsPage() {
                             )}
 
                             {col.photos?.length >= 3 && (
-                                <div className="grid grid-cols-[2fr_1fr] grid-rows-2 gap-1 w-full h-full aspect-[3/2] overflow-hidden">
-                                    {/* Image principale (grande à gauche sur 2 lignes) */}
+                                <div className="grid grid-cols-[2fr_1fr] grid-rows-2 gap-1 w-full h-full overflow-hidden">
                                     <img
                                         src={col.photos[0].src}
                                         alt={col.photos[0].alt}
@@ -99,13 +98,13 @@ export default function CollectionsPage() {
                             )}
 
                         </div>
-                        <div>
+                        <section className="flex flex-col flex-1">
                             <h2 className="font-bold">{col.title}</h2>
                             <p className="text-[var(--foreground)]/35 text-sm">
                                 {col.photos?.length || 0}
                                 {col.photos?.length === 1 ? " photo" : " photos"}
                             </p>
-                        </div>
+                        </section>
                     </Link>
                 ))}
 
