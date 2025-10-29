@@ -3,9 +3,11 @@
 import Image from "next/image";
 import NavButton from "@/components/NavButton";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
     const [isSearching, setIsSearching] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         function handleStartSearch() {
@@ -24,10 +26,14 @@ export default function Header() {
         };
     }, [])
 
+    useEffect(() => {
+        setIsSearching(false);
+    }, [pathname]);
+
     return (
         <header className={`header-border-gradient flex shrink-0 items-center justify-between p-5 mb-20 transition-all duration-700 ease-in-out ${isSearching
-                ? "active"
-                : ""
+            ? "active"
+            : ""
             }`}>
             <Image
                 src="/icons/Logo.svg"
