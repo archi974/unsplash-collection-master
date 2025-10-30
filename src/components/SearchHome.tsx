@@ -140,7 +140,7 @@ export default function SearchHome() {
                 </button>
             </form>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 mb-20 mx-50 px-4">
+            <div className="columns-2 md:columns-4 gap-4 px-4 mt-6 mb-20">
                 {photos.map((photo) => {
                     const ratio = photo.width / photo.height;
 
@@ -152,7 +152,7 @@ export default function SearchHome() {
                         <Link
                             key={`${photo.id}-${photo.urls.small}`}
                             href={`/photo/${photo.id}`}
-                            className="cursor-pointer transition-opacity duration-300 ease-in-out"
+                            className="cursor-pointer transition-opacity duration-300 ease-in-out block mb-4 break-inside-avoid"
                         >
                             <img
                                 src={photo.urls.small}
