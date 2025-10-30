@@ -125,9 +125,8 @@ export default function SearchHome() {
             </div>
             <form
                 onSubmit={handleSearch}
-                className={`flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5 transition-all duration-700 ease-in-out ${
-                    showIntro ? "mt-0" : "-mt-20 bg-[var(--background)]"
-                }`}
+                className={`flex items-center justify-between gap-3 border border-[var(--block)] shadow-sm rounded-sm px-3 py-2 w-full max-w-lg mx-5 transition-all duration-700 ease-in-out ${showIntro ? "mt-0" : "-mt-20 bg-[var(--background)]"
+                    }`}
             >
                 <input
                     type="search"
@@ -141,20 +140,28 @@ export default function SearchHome() {
                 </button>
             </form>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 mb-20 px-4">
-                {photos.map((photo) => (
-                    <Link
-                        key={`${photo.id}-${photo.urls.small}`}
-                        href={`/photo/${photo.id}`}
-                        className="cursor-pointer transition-opacity duration-300 ease-in-out"
-                    >
-                        <img
-                            src={photo.urls.small}
-                            alt={photo.alt_description ?? ""}
-                            className="rounded-lg object-cover w-full h-48 hover:opacity-80 transition duration-500 ease-in-out opacity-0 animate-fadeIn"
-                        />
-                    </Link>
-                ))}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 mb-20 mx-50 px-4">
+                {photos.map((photo) => {
+                    const ratio = photo.width / photo.height;
+
+                    let heightClass = "h-[280px] sm:h-[300px]";
+                    if (ratio > 1.3) heightClass = "h-[150px] sm:h-[180px] md:h-[200px]";
+                    else if (ratio < 0.75) heightClass = "h-[300px] sm:h-[400px] md:h-[500px]";
+
+                    return (
+                        <Link
+                            key={`${photo.id}-${photo.urls.small}`}
+                            href={`/photo/${photo.id}`}
+                            className="cursor-pointer transition-opacity duration-300 ease-in-out"
+                        >
+                            <img
+                                src={photo.urls.small}
+                                alt={photo.alt_description ?? ""}
+                                className={`rounded-lg object-cover w-full ${heightClass} hover:opacity-80 transition duration-500 ease-in-out opacity-0 animate-fadeIn`}
+                            />
+                        </Link>
+                    )
+                })}
             </div>
 
             {loading && <p className="text-center text-gray-500 mt-4">Loading more...</p>}
