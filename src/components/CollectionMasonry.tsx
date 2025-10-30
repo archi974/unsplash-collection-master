@@ -24,7 +24,7 @@ export default function CollectionMasonry({ photos }: CollectionMasonryProps) {
     return (
         <Masonry
         breakpointCols={breakpointColumns}
-        className="flex gap-4"
+        className="flex gap-4 w-full px-8"
         columnClassName="space-y-4"
     >
         {photos.map((photo: any, i: number) => {
