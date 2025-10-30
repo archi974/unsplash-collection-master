@@ -144,7 +144,7 @@ export default function SearchHome() {
                 {photos.map((photo) => {
                     const ratio = photo.width / photo.height;
 
-                    let heightClass = "h-[280px] sm:h-[300px]";
+                    let heightClass = "h-[300px] sm:h-[350px]";
                     if (ratio > 1.3) heightClass = "h-[150px] sm:h-[180px] md:h-[200px]";
                     else if (ratio < 0.75) heightClass = "h-[300px] sm:h-[400px] md:h-[500px]";
 
