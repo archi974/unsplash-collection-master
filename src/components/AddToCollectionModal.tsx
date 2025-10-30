@@ -47,6 +47,8 @@ export default function AddToCollectionModal({ photo, onClose }: AddToCollection
                     src: photo.urls.small,
                     alt: photo.alt_description || "Unsplash photo",
                     unsplashId: photo.id,
+                    height: photo.height,
+                    width: photo.width,
                 }),
             });
 

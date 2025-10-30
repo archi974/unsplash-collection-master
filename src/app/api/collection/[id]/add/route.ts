@@ -9,7 +9,7 @@ export async function POST(
   await connectMongo();
 
   try {
-    const { src, alt, unsplashId } = await req.json();
+    const { src, alt, unsplashId, height, width } = await req.json();
     const { id } = await params;
 
     if (!src || !alt || !unsplashId) {
@@ -18,7 +18,7 @@ export async function POST(
 
     const updatedCollection = await Collection.findByIdAndUpdate(
       id,
-      { $push: { photos: { src, alt, unsplashId } } },
+      { $push: { photos: { src, alt, unsplashId, height, width } } },
       { new: true }
     );
 
