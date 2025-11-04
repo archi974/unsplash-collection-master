@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { UnsplashPhoto } from "@/types/unsplash";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,8 +15,9 @@ export default function SearchHome() {
     const [hasMore, setHasMore] = useState(true);
     const [showIntro, setShowIntro] = useState(true);
     const observerRef = useRef<HTMLDivElement | null>(null);
+    const router = useRouter();
+    const searchParams = useSearchParams();
 
-    // 🔹 Fonction pour charger des photos
     const fetchPhotos = useCallback(async (searchQuery: string, currentPage: number) => {
         if (!searchQuery) return;
 
@@ -73,8 +75,19 @@ export default function SearchHome() {
         setPhotos([]);
         setPage(1);
         setHasMore(true);
+        router.push(`/?query=${encodeURIComponent(query)}`, {scroll: false})
+
         await fetchPhotos(query, 1);
     }
+
+    useEffect(() => {
+        const query = searchParams.get("query");
+        if(query) {
+            setQuery(query);
+            setShowIntro(false);
+            fetchPhotos(query, 1);
+        }
+    }, [])
 
     useEffect(() => {
         if (!hasMore || loading || error) return;
