@@ -1,129 +1,13 @@
 "use client";
-
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { UnsplashPhoto } from "@/types/unsplash";
+import { useSearchPhotos } from "@/viewmodels/useSearchPhotos";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function SearchHome() {
-    const [query, setQuery] = useState("");
-    const [photos, setPhotos] = useState<UnsplashPhoto[]>([]);
-    const [page, setPage] = useState(1);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-    const [hasMore, setHasMore] = useState(true);
-    const [showIntro, setShowIntro] = useState(true);
-    const observerRef = useRef<HTMLDivElement | null>(null);
-    const router = useRouter();
-    const searchParams = useSearchParams();
-
-    const fetchPhotos = useCallback(async (searchQuery: string, currentPage: number) => {
-        if (!searchQuery) return;
-
-        try {
-            setLoading(true);
-            setError(null);
-
-            const res = await fetch(
-                `/api/unsplashData/get?query=${encodeURIComponent(searchQuery)}&page=${currentPage}`
-            );
-
-            if (!res.ok) {
-                const status = res.status;
-                if (status === 403) throw new Error("Rate limit atteint. Réessaie plus tard.");
-                if (status === 404) throw new Error("Aucun résultat trouvé.");
-                throw new Error(`Erreur de récupération (${status})`);
-            }
-            const data: UnsplashPhoto[] = await res.json();
-
-            if (!data || data.length === 0) {
-                if (currentPage === 1) {
-                    setPhotos([]);
-                    setError("Aucun résultat trouvé.");
-                }
-                setHasMore(false);
-                return;
-            }
-
-            setPhotos((prev) => {
-                const merged = currentPage === 1 ? data : [...prev, ...data];
-                const uniquePhoto = merged.filter(
-                    (photo, index, self) =>
-                        index === self.findIndex((p) => p.id === photo.id && p.urls.small === photo.urls.small)
-                );
-                return uniquePhoto;
-            });
-            setHasMore(data.length >= 12);
-        } catch (err) {
-            console.error("Erreur Unsplash:", err);
-            setError(err instanceof Error ? err.message : "Erreur inconnue");
-            setHasMore(false);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    async function handleSearch(e: React.FormEvent) {
-        e.preventDefault();
-        if (!query.trim()) return;
-
-        window.dispatchEvent(new Event("start-search"));
-
-        setShowIntro(false);
-
-        setPhotos([]);
-        setPage(1);
-        setHasMore(true);
-        router.push(`/?query=${encodeURIComponent(query)}`, {scroll: false})
-
-        await fetchPhotos(query, 1);
-    }
-
-    useEffect(() => {
-        const query = searchParams.get("query");
-        if(query) {
-            setQuery(query);
-            setShowIntro(false);
-            fetchPhotos(query, 1);
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!hasMore || loading || error) return;
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    setPage((prev) => prev + 1);
-                }
-            },
-            { threshold: 1 }
-        );
-
-        if (observerRef.current) observer.observe(observerRef.current);
-        return () => observer.disconnect();
-    }, [hasMore, loading, error]);
-
-    useEffect(() => {
-        if (page > 1 && query.trim()) {
-            fetchPhotos(query, page);
-        }
-    }, [page, fetchPhotos]);
-
-    useEffect(() => {
-        function handleReset() {
-            setQuery("");
-            setPhotos([]);
-            setPage(1);
-            setHasMore(true);
-            setError(null);
-            setShowIntro(true);
-        }
-
-        window.addEventListener("reset-search", handleReset);
-        return () => window.removeEventListener("reset-search", handleReset);
-    }, []);
+    const {
+        query, setQuery, photos, loading, error,
+        hasMore, showIntro, observerRef, handleSearch
+    } = useSearchPhotos();
 
     return (
         <main
@@ -183,7 +67,7 @@ export default function SearchHome() {
                 <p className="text-center text-gray-400 mt-4">No more results.</p>
             )}
 
-            <div ref={observerRef} className="h-10 w-full"></div>
+            <div ref={observerRef} className="h-10 w-full" />
         </main>
     );
 }
